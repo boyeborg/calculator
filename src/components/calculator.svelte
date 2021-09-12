@@ -133,6 +133,7 @@
 		display: inline-block;
 		font-family: monospace;
 		background: black;
+		border: 2px solid black;
 		border-radius: 10px;
 		padding: 0 5px 5px 0;
 		width: 13rem;
@@ -141,7 +142,9 @@
 	header {
 		font-weight: 600;
 		font-size: 1.2rem;
-		color: white;
+		background: white;
+		border-radius: 10px 10px 0 0;
+		color: black;
 		padding: 0.2em 0.8rem;
 		display: flex;
 		justify-content: flex-end;
