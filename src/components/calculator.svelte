@@ -142,20 +142,10 @@
 		font-weight: 600;
 		font-size: 1.2rem;
 		color: white;
-		padding: 0.2em;
+		padding: 0.2em 0.8rem;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
 		align-items: center;
-	}
-
-	header::before {
-		content: "";
-		display: inline-block;
-		width: 0.8rem;
-		height: 0.8rem;
-		border: 0.1rem solid white;
-		border-radius: 1px;
-		margin-right: 10px;
 	}
 
 	form {
