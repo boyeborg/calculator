@@ -43,6 +43,13 @@
 
 		if (input === "C") {
 			reset();
+		} else if (input === "E") {
+			const { operand1, operand2 } = calculator;
+			if (!operand2) {
+				calculator.operand1 = String(Math.pow(10, Number(operand1)));
+			} else {
+				calculator.operand2 = String(Math.pow(10, Number(operand2)));
+			}
 		} else if (input === "=") {
 			if (calculator.operand1 && calculator.operand2 && calculator.operator) {
 				const { operand1, operator, operand2 } = calculator;
@@ -62,7 +69,16 @@
 		} else {
 			if (operandAtoms.includes(input)) {
 				addOperandAtom(input, "operand2");
-			} else if (!calculator.operand2 && operators.includes(input)) {
+			} else if (operators.includes(input)) {
+				const { operand1, operator, operand2 } = calculator;
+				if (operand2) {
+					const result = String(eval(`${operand1} ${operator} ${operand2}`));
+					calculator = {
+						operand1: result,
+						operator: input,
+						operand2: undefined,
+					};
+				}
 				calculator.operator = input;
 			}
 		}
@@ -103,18 +119,12 @@
 		<button style="grid-area: comma" on:click={onClick}>.</button>
 
 		<!-- Operators -->
-		<button style="grid-area: plus" on:click={onClick}>+</button>
+		<button class="plus" style="grid-area: plus" on:click={onClick}>+</button>
 		<button style="grid-area: minus" on:click={onClick}>-</button>
 		<button style="grid-area: multiply" on:click={onClick}>*</button>
 		<button style="grid-area: divide" on:click={onClick}>/</button>
-		<button style="grid-area: equal-1" on:click={onClick}>=</button>
-		<!-- Why are there two equal signs, Steve? Why? -->
-		<button
-			type="submit"
-			class="equal-2"
-			style="grid-area: equal-2"
-			on:click={onClick}>=</button
-		>
+		<button style="grid-area: exponent" on:click={onClick}>E</button>
+		<button type="submit" style="grid-area: equal" on:click={onClick}>=</button>
 	</form>
 </section>
 
@@ -152,14 +162,20 @@
 		display: grid;
 		grid-template-areas:
 			"display display display display"
-			"clear equal-1 divide multiply"
-			"num-7 num-8 num-9 minus"
-			"num-4 num-5 num-6 plus"
-			"num-3 num-2 num-1 equal-2"
-			"num-0 num-0 comma equal-2";
+			"clear exponent equal multiply"
+			"num-7 num-8 num-9 divide"
+			"num-4 num-5 num-6 minus"
+			"num-3 num-2 num-1 plus"
+			"num-0 num-0 comma plus";
 		gap: 0.5rem;
 		padding: 0.8rem;
-		background: lightgray;
+		background-color: white;
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			black 1px,
+			transparent 0
+		);
+		background-size: 4px 4px;
 		border-radius: 10px;
 		border: 0.1rem solid black;
 	}
@@ -196,7 +212,7 @@
 		cursor: pointer;
 	}
 
-	button.equal-2 {
+	button.plus {
 		height: auto;
 	}
 
